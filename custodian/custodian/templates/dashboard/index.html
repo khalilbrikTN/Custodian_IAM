@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/styles.css' %}">
+    <script src="{% static 'dashboard/js/script.js' %}"></script>
+
+</head>
+<body>
+<div class="dashboard-container">
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <div class="header-content">
+                <div class="welcome-message">
+                    <h1>Hello, Youhana</h1>
+                </div>
+                <!-- Search Bar -->
+                <div id="E0" class="search-bar">
+                    <form action="{% url 'handler' %}" method="GET">
+                        <input type="text" name="q" placeholder="Search..." id="searchInput">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="date">
+                    <p>13 Aug, 2024</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Parent Container for Side-by-Side Sections -->
+        <div class="sections-container">
+            <section class="applications">
+                <h2 class="SIDE_Title">Applications</h2>
+                <ul class="application-list">
+                    {% for app_name in apps %}
+                    <li class="application-item">
+                        <form action="{% url 'groups_handler' %}" method="get">
+                            {% csrf_token %}
+                            <!-- Hidden input to pass the application name -->
+                            <input type="hidden" name="app_name" value="{{ app_name }}">
+                            <label>{{ app_name }}</label>
+                            <button type="submit" class="groups_btn">Get Groups</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="groups" id="groups-section">
+                <h2 class="SIDE_Title">Groups</h2>
+                <ul class="groups-list">
+                    {% for group_name in groups %}
+                    <li class="group-item">{{group_name}}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <!-- New "Functions" Section -->
+            <section class="rbac">
+                <h2 class="SIDE_Title">Role Based Applications</h2>
+                <ul class="rbac-list">
+                    {% for rbac_app in RBAC.keys %}
+                    <li class="rbac-item">{{rbac_app}}</li>
+                    {% endfor %}
+
+                </ul>
+            </section>
+
+            <!-- New "Titles" Section -->
+            <section class="rbac">
+                <h2 class="SIDE_Title">Role Based Groups</h2>
+                <ul class="rbac-list">
+                    {% for rbac_groups in RBAC.values %}
+                    <li class="rbac-item">{{rbac_groups}}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Profile and Activity -->
+    <aside class="profile-activity">
+        <h2 class="SIDE_Title">HR Information</h2>
+        <section class="profile">
+            <!-- Employee Information -->
+            <div class="employee-info">
+                <p class="data">E0: {{id}}</p>
+                <p class="data">Employee Name: {{name}}</p>
+                <p class="data">Status: {{state}}</p>
+                <p class="data">Function Title: {{title}}</p>
+                <p class="data">Line Manager E0: {{managerID}}</p>
+                <p class="data">Line Manager: {{manager}}</p>
+                <p class="data">C.C: {{cc}}</p>
+                <p class="data">Cost Center Disc: {{ccDisc}}</p>
+                <p class="data">Sector: {{sector}}</p>
+                <p class="data">Division: {{division}}</p>
+                <p class="data">Location: {{location}}</p>
+            </div>
+        </section>
+
+        <section class="activity">
+            <h2 class="SIDE_Title">Recent Daily Sheet</h2>
+            {% for row in recent %}
+            <p class="data">- {{row.Ref}}: {{row.Description}} [{{row.branch}}] </p> <span class="event-date">{{row.Date}}</span>
+            {% endfor %}
+
+        </section>
+
+    </aside>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</body>
+</html>

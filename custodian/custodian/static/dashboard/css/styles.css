@@ -1,0 +1,210 @@
+/* General styles for the sections */
+.applications, .groups, .functions, .rbac {
+    max-height: 500px; /* Set a fixed maximum height for each section */
+    overflow-y: auto;  /* Enable vertical scrolling within the section if content exceeds the height */
+    padding: 20px;
+    background-color: #f1f5f9; /* Light gray background for the section */
+    border: 1px solid #e0e5ec; /* Light border color for a clean look */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: shadow for better appearance */
+    text-align: center; /* Center text within the section */
+}
+
+/* Specific styles for titles within each section */
+.applications h2.SIDE_Title,
+.groups h2.SIDE_Title,
+.functions h2.SIDE_Title,
+.rbac h2.SIDE_Title {
+    font-size: 1.5rem;
+    color: #1d2d50; /* Dark blue color for titles */
+    margin-bottom: 20px;
+}
+
+/* General list styles */
+.application-list, .groups-list, .functions-list, .rbac-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* General list item styles */
+.application-item, .group-item, .functions-item, .rbac-item {
+    font-size: 1rem;
+    color: #2d3a48; /* Dark gray-blue color for list items */
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #ffffff; /* White background for list items */
+    border: 1px solid #e0e5ec; /* Light border for list items */
+    border-radius: 4px;
+}
+
+/* Layout container for the sections */
+.sections-container {
+    display: grid; /* Use Grid for layout */
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    gap: 20px; /* Space between the sections */
+    margin: 80px;
+    margin-left: 0;
+    width: 78%;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9; /* Light gray background for the page */
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff; /* White background for main content */
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Align the welcome message to the top left corner */
+.welcome-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.welcome-message h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #1d2d50; /* Dark blue color for the welcome message */
+}
+
+/* Center the search bar */
+.search-bar {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    transform: translateX(-50%);
+}
+
+.search-bar input {
+    padding: 8px;
+    border: 1px solid #d0d8e0; /* Light gray border for input */
+    border-radius: 4px;
+    width: 400px;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    margin-left: 8px;
+    border: none;
+    background-color: #1d2d50; /* Dark blue button background */
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #007bff; /* Blue color for focused input */
+}
+
+/* Align the date to the top right corner */
+.date {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.date p {
+    font-size: 1rem;
+    margin: 0;
+    text-align: right;
+    color: #2d3a48; /* Dark gray-blue color for the date */
+}
+
+/* General styling for all employee info paragraphs */
+.employee-info p {
+    margin: 8px 5px;
+    font-size: 1rem;
+    color: #2d3a48; /* Dark gray-blue color for employee info */
+}
+
+/* Specific styling for each class */
+.data {
+    font-weight: bold;
+    color: #1d2d50; /* Dark blue color for data labels */
+}
+
+/* General styling for the list item */
+li {
+    margin: 10px 0;
+    padding: 5px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Specific styling for the event description */
+.event-description {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2d3a48; /* Dark gray-blue color for event description */
+    margin: 0;
+    padding-left: 0; /* Removes any left padding */
+}
+
+/* Specific styling for the event date */
+.event-date {
+    font-size: 0.9rem;
+    color: #6c757d; /* Light gray color for event date */
+    margin-left: 10px;
+}
+
+.profile-activity {
+    width: 20%; /* Fixed width of 20% of the viewport */
+    position: fixed; /* Fixes the section on the right side */
+    right: 0; /* Aligns it to the right edge */
+    top: 0; /* Aligns it to the top of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    background-color: #ffffff; /* White background for profile and activity */
+    padding: 15px;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow on the left */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Adds scroll if content overflows */
+}
+
+
+/* Styling for the groups_btn button */
+.groups_btn {
+    background-color: #007bff; /* Bootstrap primary color or adjust as needed */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    position: center; /* Aligns it to the right edge */
+
+}
+
+/* Hover effect for the button */
+.groups_btn:hover {
+    background-color: #0056b3; /* Darker shade of the button color */
+}
