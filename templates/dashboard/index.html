@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        /* General styles for sections */
+        .applications, .groups, .functions, .rbac {
+            max-height: 320px; /* Increased height for better visibility */
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f7f9fc; /* Softer light gray background */
+            border: 1px solid #dee2e6; /* Subtle border color */
+            border-radius: 10px; /* Slightly more rounded corners for a modern look */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+            text-align: center;
+        }
+
+        /* Specific styles for titles within each section */
+        .applications h2.SIDE_Title,
+        .groups h2.SIDE_Title,
+        .functions h2.SIDE_Title,
+        .rbac h2.SIDE_Title {
+            font-size: 1.6rem; /* Slightly larger font size */
+            color: #123456; /* Deep blue for a professional look */
+            margin-bottom: 16px; /* Adjusted spacing */
+        }
+
+        /* General list styles */
+        .application-list, .groups-list, .functions-list, .rbac-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* General list item styles */
+        .application-item, .group-item, .functions-item, .rbac-item {
+            font-size: 1.1rem; /* Slightly larger text */
+            color: #495057; /* Darker gray for better readability */
+            margin: 12px 0;
+            padding: 12px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+
+        /* Hover effect for list items */
+        .application-item:hover, .group-item:hover, .functions-item:hover, .rbac-item:hover {
+            background-color: #f1f3f5; /* Subtle background change on hover */
+        }
+
+        /* Layout container for sections */
+        .sections-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px; /* Increased spacing for better separation */
+            margin: 60px 20px;
+            width: 75%;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* Modern, clean font */
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px; /* More padding for spacious design */
+            background-color: #ffffff;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        /* Align the welcome message to the top left corner */
+        .welcome-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .welcome-message h1 {
+            font-size: 1.75rem; /* Larger font size for prominence */
+            margin: 0;
+            color: #123456;
+        }
+
+        /* Center the search bar */
+        .search-bar {
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 50%; /* Center aligned */
+            transform: translateX(-50%);
+        }
+
+        .search-bar input {
+            padding: 10px;
+            border: 1px solid #ced4da; /* Lighter border */
+            border-radius: 5px;
+            width: 420px;
+            font-size: 1rem; /* Consistent font size */
+        }
+
+        .search-bar button {
+            padding: 10px 16px;
+            margin-left: 8px;
+            border: none;
+            background-color: #123456;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #0056b3; /* Updated focus color */
+        }
+
+        /* Align the date to the top right corner */
+        .date {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .date p {
+            font-size: 1rem;
+            margin: 0;
+            text-align: right;
+            color: #495057;
+        }
+
+        /* General styling for employee info paragraphs */
+        .employee-info p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+
+        /* Specific styling for data labels */
+        .data {
+            font-weight: bold;
+            color: #123456;
+        }
+
+        /* General styling for the list item */
+        li {
+            margin: 12px 0;
+            padding: 8px;
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Specific styling for the event description */
+        .event-description {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #495057;
+            margin: 0;
+        }
+
+        /* Specific styling for the event date */
+        .event-date {
+            font-size: 0.95rem;
+            color: #868e96; /* Lighter gray */
+            margin-left: 12px;
+        }
+
+        /* Profile activity section */
+        .profile-activity {
+            width: 22%; /* Slightly wider for comfort */
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15); /* Stronger shadow for emphasis */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Styling for the groups_btn button */
+        .groups_btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            display: inline-block; /* Inline-block for better positioning */
+        }
+
+        /* Hover effect for the button */
+        .groups_btn:hover {
+            background-color: #00408b;
+        }
+
+    </style>
+    {% load static %}
+
+</head>
+<body>
+<div class="dashboard-container">
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <div class="header-content">
+                <div class="welcome-message">
+                    <h1>Hello, Youhana</h1>
+                </div>
+                <!-- Search Bar -->
+                <div id="E0" class="search-bar">
+                    <form action="{% url 'handler' %}" method="GET">
+                        <input type="text" name="q" placeholder="Search..." id="searchInput">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="date">
+                    <p>13 Aug, 2024</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Parent Container for Side-by-Side Sections -->
+        <div class="sections-container">
+            <section class="applications">
+                <h2 class="SIDE_Title">Applications</h2>
+                <ul class="application-list">
+                    {% for app_name in apps %}
+                    <li class="application-item">
+                        <form action="{% url 'groups_handler' %}" method="get">
+                            {% csrf_token %}
+                            <!-- Hidden input to pass the application name -->
+                            <input type="hidden" name="app_name" value="{{ app_name }}">
+                            <label>{{ app_name }}</label>
+                            <button type="submit" class="groups_btn">Get Groups</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="groups" id="groups-section">
+                <h2 class="SIDE_Title">Groups</h2>
+                <ul class="groups-list">
+                    {% for group_name in groups %}
+                    <li class="group-item">{{group_name}}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <!-- New "Functions" Section -->
+            <section class="rbac">
+                <h2 class="SIDE_Title">Role Based Applications</h2>
+                <ul class="rbac-list">
+                    {% for rbac_app in RBAC.keys %}
+                    <li class="rbac-item">{{rbac_app}}</li>
+                    {% endfor %}
+
+                </ul>
+            </section>
+
+            <!-- New "Titles" Section -->
+            <section class="rbac">
+                <h2 class="SIDE_Title">Role Based Groups</h2>
+                <ul class="rbac-list">
+                    {% for rbac_groups in RBAC.values %}
+                    <li class="rbac-item">{{rbac_groups}}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Profile and Activity -->
+    <aside class="profile-activity">
+        <h2 class="SIDE_Title">HR Information</h2>
+        <section class="profile">
+            <!-- Employee Information -->
+            <div class="employee-info">
+                <p class="data">E0: {{id}}</p>
+                <p class="data">Employee Name: {{name}}</p>
+                <p class="data">Status: {{state}}</p>
+                <p class="data">Function Title: {{title}}</p>
+                <p class="data">Line Manager E0: {{managerID}}</p>
+                <p class="data">Line Manager: {{manager}}</p>
+                <p class="data">C.C: {{cc}}</p>
+                <p class="data">Cost Center Disc: {{ccDisc}}</p>
+                <p class="data">Sector: {{sector}}</p>
+                <p class="data">Division: {{division}}</p>
+                <p class="data">Location: {{location}}</p>
+            </div>
+        </section>
+
+        <section class="activity">
+            <h2 class="SIDE_Title">Recent Daily Sheet</h2>
+            {% for row in recent %}
+            <p class="data">- {{row.Ref}}: {{row.Description}} [{{row.branch}}] </p> <span class="event-date">{{row.Date}}</span>
+            {% endfor %}
+
+        </section>
+
+    </aside>
+</div>
+
+<script src="{% static 'dashboard/js/script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</body>
+</html>
